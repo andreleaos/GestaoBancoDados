@@ -1,3 +1,5 @@
+using GestaoBancoDados.Models.IoC;
+
 namespace GestaoBancoDados
 {
     public class Program
@@ -7,6 +9,8 @@ namespace GestaoBancoDados
             var builder = WebApplication.CreateBuilder(args);
 
             // Add services to the container.
+
+            Startup.Configure(builder.Configuration, builder.Services);
 
             builder.Services.AddControllers();
 
