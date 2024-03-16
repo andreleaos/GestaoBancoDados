@@ -1,0 +1,89 @@
+﻿# criacao imagem docker para Api de gestao de banco de dados
+docker build -t andreleaos/gestaodbapi:latest .
+
+# criacao de imagem docker para BD MySql da app de gestao de banco de dados
+docker build -t andreleaos/mysqldb:latest .
+
+# criacao de imagem docker para BD MSSQL da app de gestao de banco de dados
+docker build -t andreleaos/sqlserverdb:latest .
+
+# criacao de imagem docker para BD Postgres da app de gestao de banco de dados
+docker build -t andreleaos/postgresdb:latest .
+
+# criacao de imagem docker para BD Postgres da app de gestao de banco de dados
+docker build -t andreleaos/oracledb:latest .
+
+# comando para criacao de rede
+docker network create redepostech
+
+# comando docker para criação de container da api
+docker run -d -p 8086:80 --name gestaodbapi --network redepostech andreleaos/gestaodbapi:latest
+docker run -d -p 8086:80 --name gestaodbapi andreleaos/gestaodbapi:latest
+
+
+docker run -d -p 8084:80 andreleaos/gestaodbapi:latest
+docker run -d -p 1435:1433 andreleaos/sqlserverdb:latest
+docker run -d -p 5436:5432 andreleaos/postgresdb:latest
+docker run -d -p 1524:1521 andreleaos/oracledb:latest
+
+# comando docker para criação de container de bd
+docker run -d -p 3308:3306 --name mysqldb_container --network redepostech andreleaos/mysqldb:latest
+
+# comando para que o container execute de modo iterativo
+docker exec -it gestaodbapi_container bash
+docker exec -it mysqldb_container bash
+docker exec -it 9159610d06ec bash
+
+# comando para inspecao de container
+docker inspect gestaodbapi_container
+docker inspect mysqldb_container
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' gestaodbapi_container
+docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}' mysqldb_container
+
+# instalacao do client do mysql
+apt-get install mysql-apt-config
+apt-get update
+apt-get install mysql-server
+
+# teste de conexao do BD com o server db
+mysql -h 172.17.0.2 -u root -p filmedb -P 3308
+mysql -h 172.17.0.2 -u filme_user -D filmedb -P 3308 -pabc@123
+
+# listagem dos containers em execucao
+docker ps
+
+# listagem dos containers existentes
+docker ps -a
+
+# execucao de container segurando-o em execucao
+docker run ubuntu sleep 1d
+
+# parando e executando um container
+docker stop 9159610d06ec
+docker start 9159610d06ec
+
+# remocao de um container pelo id
+docker remove 9159610d06ec
+
+# lista as imagens docker criadas
+docker images
+
+# publicacao de imagens no docker hub
+docker login
+docker push andreleaos/gestaodbapi:latest
+
+# versao do docker
+docker --version
+
+# exclusao de imagens docker
+docker rmi mysql:latest
+
+# exclusao de todas as imagens
+docker image prune
+
+# docker compose
+docker-compose up
+docker-compose up -d
+docker-compose -f docker-compose.yml up
+docker-compose -f docker-compose1.yml -f docker-compose2.yml up
+

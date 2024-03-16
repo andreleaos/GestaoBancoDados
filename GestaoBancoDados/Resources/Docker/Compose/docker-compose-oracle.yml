@@ -1,0 +1,22 @@
+﻿version: "3.9"
+services:
+  mysqldb:
+    image: andreleaos/oracledb:latest
+    container_name: oracledb
+    networks:
+      - compose-bridge
+    ports:
+      - 1524:1521
+  gestaoapi:
+    image: andreleaos/gestaodbapi:latest
+    container_name: gestaodbapi
+    networks:
+      - compose-bridge
+    ports:
+      - 8082:80
+    depends_on:
+      - oracledb	
+
+networks:
+  compose-bridge:
+    driver: bridge

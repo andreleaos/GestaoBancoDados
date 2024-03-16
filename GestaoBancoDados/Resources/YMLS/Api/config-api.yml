@@ -1,0 +1,38 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gestaodbapi
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: gestaodbapi
+  template:
+    metadata:
+      labels:
+        app: gestaodbapi
+    spec:
+      containers:
+        - name: gestaodbapi
+          image: andreleaos/gestaodbapi:latest
+          ports:
+            - containerPort: 80
+          env:
+            - name: MYSQL_HOST
+              value: "mysqldb"
+            - name: MYSQL_PORT
+              value: "3306"
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: gestaodbapi-service
+spec:
+  selector:
+    app: gestaodbapi
+  ports:
+    - protocol: TCP
+      port: 8082
+      targetPort: 80
+  type: NodePort  

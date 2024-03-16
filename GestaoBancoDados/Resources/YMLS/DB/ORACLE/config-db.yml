@@ -1,0 +1,33 @@
+﻿apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: oracledb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: oracledb
+  template:
+    metadata:
+      labels:
+        app: oracledb
+    spec:
+      containers:
+        - name: oracledb
+          image: andreleaos/oracledb:latest
+          ports:
+            - containerPort: 1521
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: oracledb-service
+spec:
+  selector:
+    app: oracledb
+  ports:
+    - protocol: TCP
+      port: 1524
+      targetPort: 1521
+  type: NodePort  

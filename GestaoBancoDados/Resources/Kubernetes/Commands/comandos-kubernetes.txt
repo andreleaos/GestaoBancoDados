@@ -1,0 +1,34 @@
+﻿kubectl get services
+kubectl get pods
+kubectl get networkpolicy
+kubectl get deployments
+
+kubectl delete service minhapi-service
+kubectl delete pod minhapi
+kubectl delete networkpolicy rede-criada
+kubectl delete deployment apicriada
+
+kubectl apply -f config-api.yaml 
+
+kubectl get version
+kubectl port-forward minhapipod 7001:80
+kubectl port-forward produtosdb 3308:3306
+
+kubectl scale --replicas=0 deployment/apigestaogames
+
+kubectl get nodes
+
+kubectl get pods --watch
+
+kubectl run nginx-pod --image=nginx:latest
+
+kubectl describe pod nginx-pod
+
+kubectl edit pod nginx-pod
+
+kubectl delete pod nginx-pod
+kubectl delete -f pod.yml
+
+kubectl get services
+kubectl get svc
+
