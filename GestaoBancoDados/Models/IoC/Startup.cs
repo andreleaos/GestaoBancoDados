@@ -4,6 +4,7 @@ using GestaoBancoDados.Models.Infrastructure.Repositories;
 using GestaoBancoDados.Models.Services;
 using MySql.Data.MySqlClient;
 using System.Data;
+using System.Data.SqlClient;
 
 namespace GestaoBancoDados.Models.IoC;
 
@@ -41,7 +42,7 @@ public static class Startup
         if (ConfigParameters.Enable_MySql)
             services.AddScoped<IDbConnection>(provider => new MySqlConnection(connStrMySql));
         else if (ConfigParameters.Enable_SqlServer)
-            services.AddScoped<IDbConnection>(provider => new MySqlConnection(connStrSqlServer));
+            services.AddScoped<IDbConnection>(provider => new SqlConnection(connStrSqlServer));
         else if (ConfigParameters.Enable_Postgres)
             services.AddScoped<IDbConnection>(provider => new MySqlConnection(connStrPostgres));
         else if (ConfigParameters.Enable_Oracle)
